@@ -1,0 +1,95 @@
+INSERT INTO users (id, email, username, password, phone_number, rating, created_at) VALUES
+(1, 'whysoserious@gmail.com', 'jonkler', 'password1', '+375291234567', 4.5, NOW()),
+(2, 'maratpaltochuvak@gmail.com', 'betment', 'password2', '+375297107010', 4.8, NOW()),
+(3, '@gmail.com', 'max_power', '1234', '+375293333333', 4.2, NOW());
+
+INSERT INTO categories (id, name) VALUES
+(1, 'Electronics'),
+(2, 'Cars'),
+(3, 'Real Estate'),
+(4, 'Clothes'),
+(5, 'Services');
+
+INSERT INTO ads (id, title, description, price, city, views_count, status, user_id, category_id, created_at) VALUES
+(1,'iPhone 11','акб 50%, стекло немного разбито, полосок всего две. возможен торг на iPhone 17 Pro(оранжевый).'
+,200,'Minsk',24,'ACTIVE',1,1,NOW()),
+(2,'iPhone 12','пользовалась девушка. в хорошем остоянии. акб 89%. продаем в связи с обновлением.'
+,100,'Grodno',10,'ACTIVE',2,1,NOW()),
+(3,'Samsung S21','процессор intel. кс 60 фпс стабильно.',500,'Minsk',7,'ACTIVE',3,1,NOW()),
+(4,'Laptop Dell','по желанию можно докинуть оперативы и ваще летать будет',800,'Brest',12,'ACTIVE',1,1,NOW()),
+(5,'MacBook Air','M1 чип',900,'Minsk',20,'ACTIVE',2,1,NOW()),
+(6,'Headphones Sony','шумодав хороший',150,'Gomel',3,'ACTIVE',3,1,NOW()),
+(7,'TV LG','4K смарт тв',600,'Vitebsk',9,'ACTIVE',1,1,NOW()),
+(8,'Camera Canon','в комплект отдам карту памяти на 64GB.',700,'Minsk',15,'ACTIVE',2,1,NOW()),
+(9,'Tablet iPad','пользовался ребенок. состояние пойдет.',450,'Brest',6,'ACTIVE',3,1,NOW()),
+(10,'Monitor Samsung','27 дюймов. небольшая царапина в уголке(на рработу не влияет).',300,'Minsk',8,'ACTIVE',1,1,NOW()),
+(11,'Keyboard Logitech','механика,красные свитчи',120,'Grodno',2,'ACTIVE',2,1,NOW()),
+(12,'Mouse Razer','как первая мышка пойдет',80,'Minsk',4,'ACTIVE',3,1,NOW()),
+(13,'BMW X5','2017 год. мотор чутка тучит',23000,'Minsk',40,'ACTIVE',1,2,NOW()),
+(14,'Audi A6','2015 год. масла много не ест',18000,'Brest',30,'ACTIVE',2,2,NOW()),
+(15,'VW Passat','2016 год. заберите его  пожалуйста',15000,'Minsk',25,'ACTIVE',3,2,NOW()),
+(16,'Toyota Camry','2018 год. четкая',20000,'Grodno',35,'ACTIVE',1,2,NOW()),
+(17,'Honda Civic','2014 год. живая легенда',12000,'Minsk',18,'ACTIVE',2,2,NOW()),
+(18,'Ford Focus','2013 год. ездила бабушка, сейчас нуны деньги',9000,'Vitebsk',12,'ACTIVE',3,2,NOW()),
+(19,'Mazda 6','2016 год. жуки начинают подъедать',14000,'Minsk',20,'ACTIVE',1,2,NOW()),
+(20,'Kia Sportage','2019 год.норм за свои деньги',22000,'Brest',22,'ACTIVE',2,2,NOW()),
+(21,'Hyundai Tucson','2020 год.',25000,'Minsk',28,'ACTIVE',3,2,NOW()),
+(22,'Nissan Qashqai','2017 год',16000,'Gomel',19,'ACTIVE',1,2,NOW()),
+(23,'Skoda Octavia','2015 год. максимум летала 380',13000,'Minsk',17,'ACTIVE',2,2,NOW()),
+(24,'Renault Logan','2012 год.',7000,'Brest',10,'ACTIVE',3,2,NOW()),
+(25,'1-room apartment','в центре',30000,'Minsk',50,'ACTIVE',1,3,NOW()),
+(26,'2-room apartment','хороший ремонт',45000,'Minsk',45,'ACTIVE',2,3,NOW()),
+(27,'3-room apartment','места очень много',60000,'Minsk',40,'ACTIVE',3,3,NOW()),
+(28,'House','хороший вариант именно для вас.',70000,'Grodno',35,'ACTIVE',1,3,NOW()),
+(29,'Studio','дешево. в москве нынче так',80000,'Moscow',20,'ACTIVE',2,3,NOW()),
+(30,'Cottage','люкс',120000,'Minsk',60,'ACTIVE',3,3,NOW()),
+(31,'Room','делим комнаты с 90-детней бабушкой и витей(у него галлюцинации)',15000,'Vitebsk',10,'ACTIVE',1,3,NOW()),
+(32,'Apartment','около метро',50000,'Minsk',55,'ACTIVE',2,3,NOW()),
+(33,'House','в деревне',20000,'Gomel',15,'ACTIVE',3,3,NOW()),
+(34,'Flat','квартира',48000,'Minsk',33,'ACTIVE',1,3,NOW()),
+(35,'Apartment','новостройка',65000,'Minsk',42,'ACTIVE',2,3,NOW()),
+(36,'Studio','модерн',35000,'Brest',18,'ACTIVE',3,3,NOW()),
+(37,'Jacket','зима',80,'Minsk',5,'ACTIVE',1,4,NOW()),
+(38,'Jeans','синие',50,'Grodno',6,'ACTIVE',2,4,NOW()),
+(39,'T-shirt','хлопок',20,'Minsk',3,'ACTIVE',3,4,NOW()),
+(40,'Shoes','оригинальные NIKEли',120,'Brest',8,'ACTIVE',1,4,NOW()),
+(41,'Dress','вечернее',150,'Minsk',10,'ACTIVE',2,4,NOW()),
+(42,'Sweater','под дождь',60,'Gomel',4,'ACTIVE',3,4,NOW()),
+(43,'Shorts','летняя',30,'Minsk',2,'ACTIVE',1,4,NOW()),
+(44,'Cap','спортивная',15,'Vitebsk',1,'ACTIVE',2,4,NOW()),
+(45,'Coat','осенняя',100,'Minsk',7,'ACTIVE',3,4,NOW()),
+(46,'Sneakers','абибас орига',110,'Brest',9,'ACTIVE',1,4,NOW()),
+(47,'Scarf','шертяной',25,'Minsk',2,'ACTIVE',2,4,NOW()),
+(48,'Gloves','круутые четкие',40,'Grodno',3,'ACTIVE',3,4,NOW()),
+(49,'Plumbing','чиним трубы НЕДОРОГО',50,'Minsk',5,'ACTIVE',1,5,NOW()),
+(50,'Electrician','проводка у вас дома НЕДОРОГО',60,'Brest',6,'ACTIVE',2,5,NOW()),
+(51,'Cleaning','услуги жены на час НЕДОРОГО',40,'Minsk',4,'ACTIVE',3,5,NOW()),
+(52,'Delivery','дотавка на дом е-доставка',30,'Grodno',7,'ACTIVE',1,5,NOW()),
+(53,'Tutor','занятия с репетитором по математике',20,'Minsk',10,'ACTIVE',2,5,NOW()),
+(54,'Repair','ремонт айфонов на станции метро Купаловская',70,'Minsk',8,'ACTIVE',3,5,NOW()),
+(55,'Taxi','Яндекс Go',15,'Gomel',3,'ACTIVE',1,5,NOW()),
+(56,'Design','студия Артемия Лебедева',100,'Minsk',9,'ACTIVE',2,5,NOW()),
+(57,'Programming','Web разработка Java кода',200,'Minsk',12,'ACTIVE',3,5,NOW()),
+(58,'Photography','фотостудия',120,'Brest',11,'ACTIVE',1,5,NOW()),
+(59,'Repair','ремонт нотбуков Lenovo IdeaPad',80,'Minsk',6,'ACTIVE',2,5,NOW()),
+(60,'Car wash','собственноручно вымою ваше корыто',25,'Vitebsk',2,'ACTIVE',3,5,NOW());
+
+INSERT INTO favorites (id, user_id, ad_id) VALUES
+(1, 1, 2),
+(2, 1, 5),
+(3, 1, 14),
+(4, 1, 20),
+(5, 2, 25),
+(6, 2, 26),
+(7, 2, 30),
+(8, 3, 1),
+(9, 3, 13),
+(10, 3, 37),
+(11, 3, 49),
+(12, 2, 1),
+(13, 3, 2);
+
+SELECT setval('ads_id_seq', (SELECT MAX(id) FROM ads));
+SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));
+SELECT setval('categories_id_seq', (SELECT MAX(id) FROM categories));
+SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites));
