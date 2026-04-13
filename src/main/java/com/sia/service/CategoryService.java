@@ -9,4 +9,6 @@ public interface CategoryService {
     CategoryDTO createCategory(CategoryDTO dto);
 
     List<CategoryDTO> getAllCategories();
+
+    CategoryDTO updateCategory(Integer id, CategoryDTO dto);
 }

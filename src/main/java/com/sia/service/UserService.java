@@ -5,9 +5,9 @@ import com.sia.dto.UserDTO;
 
 import java.util.List;
 
-public interface UserService{
+public interface UserService {
 
-    UserDTO createUser (UserCreateDTO dto);
+    UserDTO createUser(UserCreateDTO dto);
 
     UserDTO getUserById(Integer id);
 
@@ -15,4 +15,5 @@ public interface UserService{
 
     void deleteUser(Integer id);
 
+    UserDTO updateUser(Integer id, UserCreateDTO dto);
 }

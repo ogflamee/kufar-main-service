@@ -15,4 +15,6 @@ public interface AdService {
     Page<AdDTO> searchByTitle(String keyword, Pageable pageable);
 
     void deleteAd(Integer id);
+
+    AdDTO updateAd(Integer id, AdDTO dto);
 }

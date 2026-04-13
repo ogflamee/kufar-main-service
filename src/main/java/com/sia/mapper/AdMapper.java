@@ -10,7 +10,7 @@ public interface AdMapper {
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "category.id", target = "categoryId")
-    AdDTO toDto(Ad Ad);
+    AdDTO toDTO(Ad Ad);
 
     @Mapping( target = "user", ignore = true)
     @Mapping( target = "category", ignore = true)

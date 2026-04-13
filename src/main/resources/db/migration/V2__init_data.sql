@@ -1,7 +1,7 @@
 INSERT INTO users (id, email, username, password, phone_number, rating, created_at) VALUES
 (1, 'whysoserious@gmail.com', 'jonkler', 'password1', '+375291234567', 4.5, NOW()),
 (2, 'maratpaltochuvak@gmail.com', 'betment', 'password2', '+375297107010', 4.8, NOW()),
-(3, '@gmail.com', 'max_power', '1234', '+375293333333', 4.2, NOW());
+(3, 'ndjxixnekdjne@gmail.com', 'kanye_east', 'polarisbilbobra228', '+375293333333', 4.2, NOW());
 
 INSERT INTO categories (id, name) VALUES
 (1, 'Electronics'),
@@ -25,7 +25,7 @@ INSERT INTO ads (id, title, description, price, city, views_count, status, user_
 (10,'Monitor Samsung','27 дюймов. небольшая царапина в уголке(на рработу не влияет).',300,'Minsk',8,'ACTIVE',1,1,NOW()),
 (11,'Keyboard Logitech','механика,красные свитчи',120,'Grodno',2,'ACTIVE',2,1,NOW()),
 (12,'Mouse Razer','как первая мышка пойдет',80,'Minsk',4,'ACTIVE',3,1,NOW()),
-(13,'BMW X5','2017 год. мотор чутка тучит',23000,'Minsk',40,'ACTIVE',1,2,NOW()),
+(13,'BMW X5','2017 год. мотор чутка стучит',23000,'Minsk',40,'ACTIVE',1,2,NOW()),
 (14,'Audi A6','2015 год. масла много не ест',18000,'Brest',30,'ACTIVE',2,2,NOW()),
 (15,'VW Passat','2016 год. заберите его  пожалуйста',15000,'Minsk',25,'ACTIVE',3,2,NOW()),
 (16,'Toyota Camry','2018 год. четкая',20000,'Grodno',35,'ACTIVE',1,2,NOW()),

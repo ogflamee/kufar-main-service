@@ -11,7 +11,7 @@ CREATE TABLE users (
 CREATE TABLE categories (
    id SERIAL PRIMARY KEY,
    name VARCHAR(255) NOT NULL
-);;
+);
 
 CREATE TABLE ads (
    id SERIAL PRIMARY KEY,
