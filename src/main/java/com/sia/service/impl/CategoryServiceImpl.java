@@ -28,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryRepository.findByName(dto.getName())
                 .ifPresent(c ->{
-                    throw new IllegalArgumentException("category already exits");
+                    throw new IllegalArgumentException("category already exists");
                 } );
 
         Category category = categoryMapper.toEntity(dto);
@@ -62,7 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryRepository.findByName(dto.getName())
                 .ifPresent(c ->{
-                    throw new IllegalArgumentException("category already exits");
+                    throw new IllegalArgumentException("category already exists");
                 } );
 
         category.setName(dto.getName());
