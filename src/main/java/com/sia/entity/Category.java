@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Сущность категории.
+ * Представляет собой таблицу categories в БД.
+ */
 @Data
 @Builder
 @AllArgsConstructor

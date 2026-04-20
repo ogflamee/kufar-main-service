@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import com.sia.dto.FavoriteDTO;
 import com.sia.service.FavoriteService;
 
+/**
+ * REST-контроллер для работы с избранными.
+ * предоставляет endpoints для сдобавления, просмотра
+ * и удаления избранных.
+ */
 @RestController
 @RequestMapping("/api/favorites")
 @RequiredArgsConstructor

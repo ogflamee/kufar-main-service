@@ -6,6 +6,10 @@ import com.sia.entity.User;
 
 import java.util.Optional;
 
+/**
+ * Репозиторий для работы с пользователями.
+ * Обеспечивает доступ к данным в БД.
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 

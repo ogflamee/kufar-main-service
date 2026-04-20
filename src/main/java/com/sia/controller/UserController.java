@@ -11,6 +11,11 @@ import com.sia.service.UserService;
 
 import java.util.List;
 
+/**
+ * REST-контроллер для работы с пользователями.
+ * предоставляет endpoints для создания, получения,
+ * обновления и удаления поьзователей.
+ */
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor

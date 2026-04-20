@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Сущность объявления.
+ * Представляет собой таблицу ads в БД.
+ */
 @Data
 @Builder
 @AllArgsConstructor

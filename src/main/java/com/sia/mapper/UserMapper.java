@@ -6,6 +6,9 @@ import com.sia.dto.UserCreateDTO;
 import com.sia.dto.UserDTO;
 import com.sia.entity.User;
 
+/**
+ * Маппер для преобразования между сущностью пользователем и DTO.
+ */
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 

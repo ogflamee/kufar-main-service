@@ -8,6 +8,10 @@ import com.sia.entity.Favorite;
 
 import java.util.Optional;
 
+/**
+ * Репозиторий для работы с избранными.
+ * Обеспечивает доступ к данным в БД.
+ */
 @Repository
 public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
 

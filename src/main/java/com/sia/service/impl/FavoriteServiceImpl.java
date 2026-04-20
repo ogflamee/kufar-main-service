@@ -18,6 +18,11 @@ import com.sia.repository.FavoriteRepository;
 import com.sia.service.FavoriteService;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Реализация сервиса избранных.
+ * содержит бизнес-логику работы с избранными,
+ * включая валидацию и взаимодйствие с БД.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

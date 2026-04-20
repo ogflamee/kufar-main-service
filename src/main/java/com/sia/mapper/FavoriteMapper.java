@@ -5,6 +5,9 @@ import com.sia.dto.FavoriteDTO;
 import com.sia.entity.Favorite;
 import org.mapstruct.Mapping;
 
+/**
+ * Маппер для преобразования между сущностью избранного и DTO.
+ */
 @Mapper(componentModel = "spring")
 public interface FavoriteMapper {
 

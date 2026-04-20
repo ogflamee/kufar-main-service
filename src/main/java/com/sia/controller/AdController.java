@@ -10,7 +10,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.sia.dto.AdDTO;
 import com.sia.service.AdService;
-
+/**
+ * REST-контроллер для работы с объявлениями.
+ * предоставляет endpoints для создания, получения, поиска
+ * обновления и удаления объявлений.
+ */
 @RestController
 @RequestMapping("/api/ads")
 @RequiredArgsConstructor

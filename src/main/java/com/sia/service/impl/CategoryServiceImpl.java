@@ -14,6 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Реализация сервиса категорий.
+ * содержит бизнес-логику работы с категориями,
+ * включая валидацию и взаимодйствие с БД.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

@@ -5,6 +5,9 @@ import org.mapstruct.Mapping;
 import com.sia.dto.AdDTO;
 import com.sia.entity.Ad;
 
+/**
+ * Маппер для преобразования между сущностью объявления и DTO.
+ */
 @Mapper(componentModel = "spring")
 public interface AdMapper {
 

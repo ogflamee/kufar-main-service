@@ -10,6 +10,10 @@ import com.sia.service.CategoryService;
 
 import java.util.List;
 
+/**
+ * REST-контроллер для работы с категориями объявлений.
+ * предоставляет endpoints для создания, получения, обновления категорий.
+ */
 @RestController
 @RequestMapping("/api/categories")
 @RequiredArgsConstructor

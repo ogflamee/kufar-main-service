@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Сущность пользователя.
+ * Представляет собой таблицу users в БД.
+ */
 @Data
 @Builder
 @AllArgsConstructor

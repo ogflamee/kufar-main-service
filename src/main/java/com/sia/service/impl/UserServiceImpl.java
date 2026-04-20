@@ -16,6 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Реализация сервиса пользователей.
+ * содержит бизнес-логику работы с пользователями,
+ * включая валидацию и взаимодйствие с БД.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

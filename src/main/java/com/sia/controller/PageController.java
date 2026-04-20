@@ -22,6 +22,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * MVC-контроллер для обработки web-запросов и отображения страниц прилоения.
+ * отвечает за авторизацию, регистрацию, работу с объявлениями,
+ * избранными и сообщениями ерез html-представление.
+ */
 @Controller
 @RequiredArgsConstructor
 public class PageController {

@@ -9,6 +9,10 @@ import com.sia.entity.AdStatus;
 
 import java.math.BigDecimal;
 
+/**
+ * Репозиторий для работы с объявлениями.
+ * Обеспечивает доступ к данным в БД.
+ */
 @Repository
 public interface AdRepository extends JpaRepository<Ad, Integer> {
 

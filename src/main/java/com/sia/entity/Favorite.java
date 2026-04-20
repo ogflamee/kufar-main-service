@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Сущность избранного.
+ * Представляет собой таблицу favorites в БД.
+ */
 @Data
 @Builder
 @AllArgsConstructor

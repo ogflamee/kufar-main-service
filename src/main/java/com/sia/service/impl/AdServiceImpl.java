@@ -22,6 +22,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Реализация сервиса объявлений.
+ * содержит бизнес-логику работы с объявлениями,
+ * включая валидацию и взаимодйствие с БД.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

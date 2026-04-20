@@ -7,6 +7,11 @@ import com.sia.dto.AdDTO;
 
 import java.util.List;
 
+/**
+ * Сервис для работы с объявлениями.
+ * содержит бизнес-логику создания, обновления,
+ * удаления и получения объявлений.
+ */
 public interface AdService {
 
     AdDTO createAd(AdDTO dto);
