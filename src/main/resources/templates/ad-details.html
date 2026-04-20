@@ -226,6 +226,14 @@
                 </div>
 
                 <div class="meta-item">
+                    <div class="meta-label">Дата публикации</div>
+                    <div class="meta-value"
+                         th:text="${ad.createdAt != null ? #temporals.format(ad.createdAt, 'dd.MM.yyyy HH:mm') : 'Не указана'}">
+                        20.04.2026 14:30
+                    </div>
+                </div>
+
+                <div class="meta-item">
                     <div class="meta-label">Просмотры</div>
                     <div class="meta-value" th:text="${ad.viewsCount}">0</div>
                 </div>
@@ -261,9 +269,19 @@
 
                         <div th:each="msg : ${messages}"
                              th:style="${msg.senderId == currentUserId}
-                    ? 'margin-left:auto; max-width:70%; background:#667eea; color:white; padding:10px; border-radius:10px; margin-bottom:10px;'
-                    : 'max-width:70%; background:#eee; padding:10px; border-radius:10px; margin-bottom:10px;'">
-                            <span th:text="${msg.text}">text</span>
+        ? 'margin-left:auto; max-width:70%; background:#667eea; color:white; padding:10px; border-radius:10px; margin-bottom:10px;'
+        : 'max-width:70%; background:#eee; color:#222; padding:10px; border-radius:10px; margin-bottom:10px;'">
+
+                            <div th:if="${msg.createdAt != null}"
+                                 style="font-size:12px; margin-bottom:6px; opacity:0.8;"
+                                 th:text="${#temporals.format(msg.createdAt, 'dd.MM.yyyy HH:mm')}">
+                                20.04.2026 16:55
+                            </div>
+
+                            <div style="word-break: break-word; white-space: pre-wrap;"
+                                 th:text="${msg.text}">
+                                text
+                            </div>
                         </div>
                     </div>
 
@@ -304,9 +322,19 @@
 
                             <div th:each="msg : ${messages}"
                                  th:style="${msg.senderId == currentUserId}
-                        ? 'margin-left:auto; max-width:70%; background:#667eea; color:white; padding:10px; border-radius:10px; margin-bottom:10px;'
-                        : 'max-width:70%; background:#eee; padding:10px; border-radius:10px; margin-bottom:10px;'">
-                                <span th:text="${msg.text}">text</span>
+        ? 'margin-left:auto; max-width:70%; background:#667eea; color:white; padding:10px; border-radius:10px; margin-bottom:10px;'
+        : 'max-width:70%; background:#eee; color:#222; padding:10px; border-radius:10px; margin-bottom:10px;'">
+
+                                <div th:if="${msg.createdAt != null}"
+                                     style="font-size:12px; margin-bottom:6px; opacity:0.8;"
+                                     th:text="${#temporals.format(msg.createdAt, 'dd.MM.yyyy HH:mm')}">
+                                    20.04.2026 16:55
+                                </div>
+
+                                <div style="word-break: break-word; white-space: pre-wrap;"
+                                     th:text="${msg.text}">
+                                    text
+                                </div>
                             </div>
                         </div>
 

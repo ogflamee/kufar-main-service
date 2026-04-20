@@ -314,6 +314,11 @@
                         <span th:text="${ad.city}">Минск</span>
                         <span> • </span>
                         <span th:text="${ad.status}">ACTIVE</span>
+                        <span th:if="${ad.createdAt != null}"> • </span>
+                        <span th:if="${ad.createdAt != null}"
+                              th:text="${#temporals.format(ad.createdAt, 'dd.MM.yyyy HH:mm')}">
+        20.04.2026 14:30
+    </span>
                     </div>
                     <div class="ad-description" th:text="${ad.description}">
                         Описание объявления
