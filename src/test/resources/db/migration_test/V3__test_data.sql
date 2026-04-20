@@ -22,8 +22,3 @@ INSERT INTO favorites (id, user_id, ad_id) VALUES
 (100, 100, 100),
 (101, 100, 101),
 (102, 100, 102);
-
-SELECT setval('ads_id_seq', (SELECT MAX(id) FROM ads));
-SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));
-SELECT setval('categories_id_seq', (SELECT MAX(id) FROM categories));
-SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites));

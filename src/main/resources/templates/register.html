@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 24px;
+            color: #2d3748;
+        }
+
+        .page-shell {
+            max-width: 950px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+            overflow: hidden;
+        }
+
+        .content {
+            padding: 40px 32px;
+        }
+
+        .form-card {
+            max-width: 560px;
+            margin: 0 auto;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+        }
+
+        .form-title {
+            font-size: 1.9rem;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            outline: none;
+            font-size: 1rem;
+            color: #1f2937;
+        }
+
+        input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+        }
+
+        .field-error {
+            margin-top: 6px;
+            color: #dc2626;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35);
+        }
+
+        .form-footer {
+            margin-top: 18px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .form-footer a {
+            color: #5b21b6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 12px;
+            }
+
+            .content {
+                padding: 20px 14px;
+            }
+
+            .form-card {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-shell">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div class="content">
+        <div class="form-card">
+            <h1 class="form-title">Регистрация</h1>
+            <p class="form-subtitle">Создай аккаунт, чтобы размещать объявления и писать сообщения.</p>
+
+            <div th:if="${param.error}" class="alert alert-error">
+                Такой логин или пароль уже существуют в системе.
+            </div>
+
+            <form th:action="@{/register}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" th:field="*{email}" placeholder="example@gmail.com" required>
+                    <div class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Логин</label>
+                    <input id="username" type="text" th:field="*{username}" placeholder="Введите логин" required>
+                    <div class="field-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input id="password" type="password" th:field="*{password}" placeholder="Введите пароль" required>
+                    <div class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber">Телефон</label>
+                    <input id="phoneNumber" type="text" th:field="*{phoneNumber}" placeholder="+375291112233" required>
+                    <div class="field-error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+            </form>
+
+            <div class="form-footer">
+                Уже есть аккаунт?
+                <a th:href="@{/login}">Войти</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

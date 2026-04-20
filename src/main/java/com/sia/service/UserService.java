@@ -13,6 +13,8 @@ public interface UserService {
 
     List<UserDTO> getAllUsers();
 
+    UserDTO getUserByUsername(String username);
+
     void deleteUser(Integer id);
 
     UserDTO updateUser(Integer id, UserCreateDTO dto);

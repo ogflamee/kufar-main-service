@@ -2,6 +2,8 @@ package com.sia.service.impl;
 
 import com.sia.entity.Ad;
 import com.sia.entity.User;
+import com.sia.exception.ConflictException;
+import com.sia.exception.NotFoundException;
 import com.sia.repository.AdRepository;
 import com.sia.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,14 +44,18 @@ public class FavoriteServiceImpl implements FavoriteService {
         }
 
         User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new RuntimeException("user was not found."));
+                .orElseThrow(() -> new NotFoundException("user was not found."));
 
         Ad ad = adRepository.findById(dto.getAdId())
-                .orElseThrow(() -> new RuntimeException("ad was not found."));
+                .orElseThrow(() -> new NotFoundException("ad was not found."));
+
+        if(ad.getUser().getId().equals(dto.getUserId())) {
+            throw new IllegalArgumentException("you can't add your ad to favorites");
+        }
 
         favoriteRepository.findByUser_IdAndAd_Id(dto.getUserId(), dto.getAdId())
                 .ifPresent(favorite -> {
-                    throw new RuntimeException("favorite is already exists");
+                    throw new ConflictException("favorite is already exists");
                 });
 
         Favorite favorite = favoriteMapper.toEntity(dto);

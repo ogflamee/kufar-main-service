@@ -2,6 +2,7 @@ package com.sia.impl.service;
 
 import com.sia.dto.CategoryDTO;
 import com.sia.entity.Category;
+import com.sia.exception.ConflictException;
 import com.sia.mapper.CategoryMapper;
 import com.sia.repository.CategoryRepository;
 import com.sia.service.impl.CategoryServiceImpl;
@@ -69,8 +70,8 @@ class CategoryServiceImplTest {
 
         when(categoryRepository.findByName(dto.getName())).thenReturn(Optional.of(existing));
 
-        IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
+        ConflictException ex = assertThrows(
+                ConflictException.class,
                 () -> categoryService.createCategory(dto)
         );
 
@@ -188,8 +189,8 @@ class CategoryServiceImplTest {
         when(categoryRepository.findById(id)).thenReturn(Optional.of(current));
         when(categoryRepository.findByName(dto.getName())).thenReturn(Optional.of(existing));
 
-        IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
+        ConflictException ex = assertThrows(
+                ConflictException.class,
                 () -> categoryService.updateCategory(id, dto)
         );
 

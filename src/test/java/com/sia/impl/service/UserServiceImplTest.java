@@ -3,6 +3,8 @@ package com.sia.impl.service;
 import com.sia.dto.UserCreateDTO;
 import com.sia.dto.UserDTO;
 import com.sia.entity.User;
+import com.sia.exception.ConflictException;
+import com.sia.exception.NotFoundException;
 import com.sia.mapper.UserMapper;
 import com.sia.repository.UserRepository;
 import com.sia.service.impl.UserServiceImpl;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +29,9 @@ class UserServiceImplTest {
 
     @Mock
     private UserMapper userMapper;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -50,6 +56,7 @@ class UserServiceImplTest {
         when(userMapper.toEntity(dto)).thenReturn(user);
         when(userRepository.save(user)).thenReturn(saved);
         when(userMapper.toDTO(saved)).thenReturn(response);
+        when(passwordEncoder.encode(dto.getPassword())).thenReturn("encodedPassword");
 
         UserDTO result = userService.createUser(dto);
 
@@ -66,7 +73,7 @@ class UserServiceImplTest {
 
         when(userRepository.existsByEmail(dto.getEmail())).thenReturn(true);
 
-        assertThrows(IllegalArgumentException.class, ()-> userService.createUser(dto));
+        assertThrows(ConflictException.class, () -> userService.createUser(dto));
     }
 
     @Test
@@ -78,7 +85,7 @@ class UserServiceImplTest {
         when(userRepository.existsByEmail(dto.getEmail())).thenReturn(false);
         when(userRepository.existsByUsername(dto.getUsername())).thenReturn(true);
 
-        assertThrows(IllegalArgumentException.class, ()-> userService.createUser(dto));
+        assertThrows(ConflictException.class, () -> userService.createUser(dto));
     }
 
     @Test
@@ -104,7 +111,7 @@ class UserServiceImplTest {
     void getUserById_notFound() {
         when(userRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, ()-> userService.getUserById(1));
+        assertThrows(NotFoundException.class, () -> userService.getUserById(1));
     }
 
     @Test
@@ -141,21 +148,23 @@ class UserServiceImplTest {
         when(userRepository.findById(id)).thenReturn(Optional.of(user));
         when(userRepository.save(user)).thenReturn(updated);
         when(userMapper.toDTO(updated)).thenReturn(response);
+        when(passwordEncoder.encode(dto.getPassword())).thenReturn("encodedPassword");
 
         UserDTO result = userService.updateUser(id, dto);
 
         assertNotNull(result);
-        assertEquals(id,result.getId());
+        assertEquals(id, result.getId());
     }
 
     @Test
     void updateUser_notFound() {
         when(userRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, ()-> userService.updateUser(1, new UserCreateDTO()));
+        assertThrows(RuntimeException.class, () -> userService.updateUser(1, new UserCreateDTO()));
     }
+
     @Test
-    void deleteUser_success(){
+    void deleteUser_success() {
         when(userRepository.existsById(1)).thenReturn(true);
 
         userService.deleteUser(1);
@@ -167,6 +176,31 @@ class UserServiceImplTest {
     void deleteUser_notFound() {
         when(userRepository.existsById(1)).thenReturn(false);
 
-        assertThrows(RuntimeException.class, ()-> userService.deleteUser(1));
+        assertThrows(NotFoundException.class, () -> userService.deleteUser(1));
+    }
+
+    @Test
+    void getUserByUsername_success() {
+        String username = "test_user";
+
+        User user = new User();
+        user.setId(1);
+        user.setUsername(username);
+
+        UserDTO dto = new UserDTO();
+        dto.setId(1);
+        dto.setUsername(username);
+
+        when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
+        when(userMapper.toDTO(user)).thenReturn(dto);
+
+        UserDTO result = userService.getUserByUsername(username);
+
+        assertNotNull(result);
+        assertEquals(1, result.getId());
+        assertEquals(username, result.getUsername());
+
+        verify(userRepository).findByUsername(username);
+        verify(userMapper).toDTO(user);
     }
 }

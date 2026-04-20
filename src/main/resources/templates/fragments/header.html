@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<header th:fragment="header" class="navbar">
+    <div class="container navbar-inner">
+        <a class="brand" th:href="@{/ads}">KufarClone</a>
+
+        <nav class="nav-links">
+            <div sec:authorize="isAnonymous()" style="display:flex; gap:12px;">
+                <a class="btn btn-secondary" th:href="@{/register}">Регистрация</a>
+                <a class="btn btn-primary" th:href="@{/login}">Войти</a>
+            </div>
+
+            <div sec:authorize="isAuthenticated()" style="display:flex; gap:12px; align-items:center;">
+                <a class="btn btn-light" th:href="@{/ads}">Объявления</a>
+                <a class="btn btn-light" th:href="@{/ads/create}">Создать</a>
+                <a class="btn btn-light" th:href="@{/favorites}">Избранное</a>
+
+                <form th:action="@{/logout}" method="post" style="margin:0;">
+                    <button type="submit" class="btn btn-danger">Выйти</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+</header>
+</body>
+</html>

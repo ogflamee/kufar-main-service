@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Объявления</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 24px;
+            color: #2d3748;
+        }
+
+        .page-shell {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+            overflow: hidden;
+        }
+
+        .site-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 28px 34px;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .brand-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.95rem;
+            opacity: 0.92;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .content {
+            padding: 34px;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .toolbar h2 {
+            font-size: 1.8rem;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .toolbar p {
+            color: #6b7280;
+        }
+
+        .filter-form {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            padding: 14px 16px;
+            border-radius: 12px;
+        }
+
+        .filter-form label {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .filter-form select {
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            min-width: 220px;
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn-light {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .btn-light:hover {
+            background: #e0e7ff;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.28);
+        }
+
+        .create-block {
+            margin-bottom: 26px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .ad-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .ad-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+        }
+
+        .ad-card-body {
+            padding: 18px;
+        }
+
+        .ad-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+
+        .ad-price {
+            color: #6d28d9;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .ad-meta {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        .ad-description {
+            color: #475569;
+            line-height: 1.5;
+            min-height: 72px;
+            margin-bottom: 16px;
+        }
+
+        .ad-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .empty-box {
+            padding: 40px;
+            text-align: center;
+            color: #64748b;
+            background: #f8fafc;
+            border-radius: 14px;
+            border: 1px dashed #cbd5e1;
+        }
+
+        .pagination {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .page-indicator {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        @media (max-width: 1200px) {
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 18px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-shell">
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="content">
+        <div class="toolbar">
+            <div>
+                <h2>Объявления</h2>
+                <p th:text="'Найдено: ' + ${adsPage.totalElements}">Найдено: 0</p>
+            </div>
+
+            <form class="filter-form" th:action="@{/ads}" method="get">
+                <label for="categoryId">Категория:</label>
+                <select id="categoryId" name="categoryId">
+                    <option value="">Все категории</option>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}"
+                            th:selected="${selectedCategoryId != null and selectedCategoryId == category.id}">
+                    </option>
+                </select>
+
+                <input type="hidden" name="size" value="8">
+                <button type="submit" class="btn btn-primary">Показать</button>
+            </form>
+        </div>
+
+        <div class="create-block" th:if="${currentUserId != null}">
+            <a th:href="@{/ads/create}" class="btn btn-primary">+ Создать объявление</a>
+        </div>
+
+        <div th:if="${adsPage.content.isEmpty()}" class="empty-box">
+            Пока нет объявлений для выбранной категории
+        </div>
+
+        <div th:if="${!adsPage.content.isEmpty()}" class="cards-grid">
+            <div class="ad-card" th:each="ad : ${adsPage.content}">
+                <div class="ad-card-body">
+                    <div class="ad-title" th:text="${ad.title}">Название</div>
+                    <div class="ad-price" th:text="${ad.price} + ' BYN'">100 BYN</div>
+
+                    <div class="ad-meta">
+                        <span th:text="${ad.city}">Минск</span>
+                        <span> • </span>
+                        <span th:text="${ad.status}">ACTIVE</span>
+                    </div>
+                    <div class="ad-description" th:text="${ad.description}">
+                        Описание объявления
+                    </div>
+
+                    <div class="ad-actions">
+                        <a class="btn btn-light" th:href="@{'/ads/' + ${ad.id}}">Подробнее</a>
+
+                        <form th:if="${currentUserId != null}"
+                              th:action="@{/favorites/{id}/add(id=${ad.id})}"
+                              method="post">
+                            <button type="submit" class="btn btn-primary">В избранное</button>
+                        </form>
+
+                        <a th:if="${currentUserId != null and currentUserId == ad.userId}"
+                           th:href="@{/ads/{id}/edit(id=${ad.id})}"
+                           class="btn btn-light">
+                            Редактировать
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination" th:if="${adsPage.totalPages > 1}">
+            <a class="btn btn-light"
+               th:if="${adsPage.number > 0 and selectedCategoryId != null}"
+               th:href="@{/ads(page=${adsPage.number - 1}, size=8, categoryId=${selectedCategoryId})}">
+                ← Предыдущая
+            </a>
+
+            <a class="btn btn-light"
+               th:if="${adsPage.number > 0 and selectedCategoryId == null}"
+               th:href="@{/ads(page=${adsPage.number - 1}, size=8)}">
+                ← Предыдущая
+            </a>
+
+            <span class="page-indicator"
+                  th:text="'Страница ' + (${adsPage.number} + 1) + ' из ' + ${adsPage.totalPages}">
+                Страница 1 из 1
+            </span>
+
+            <a class="btn btn-light"
+               th:if="${adsPage.number + 1 < adsPage.totalPages and selectedCategoryId != null}"
+               th:href="@{/ads(page=${adsPage.number + 1}, size=8, categoryId=${selectedCategoryId})}">
+                Следующая →
+            </a>
+
+            <a class="btn btn-light"
+               th:if="${adsPage.number + 1 < adsPage.totalPages and selectedCategoryId == null}"
+               th:href="@{/ads(page=${adsPage.number + 1}, size=8)}">
+                Следующая →
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

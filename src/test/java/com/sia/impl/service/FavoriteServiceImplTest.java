@@ -51,8 +51,12 @@ class FavoriteServiceImplTest {
         User user = new User();
         user.setId(1);
 
+        User adOwner = new User();
+        adOwner.setId(999);
+
         Ad ad = new Ad();
         ad.setId(2);
+        ad.setUser(adOwner);
 
         Favorite favorite = new Favorite();
         Favorite saved = new Favorite();
@@ -168,8 +172,12 @@ class FavoriteServiceImplTest {
         User user = new User();
         user.setId(1);
 
+        User adOwner = new User();
+        adOwner.setId(999);
+
         Ad ad = new Ad();
         ad.setId(2);
+        ad.setUser(adOwner);
 
         Favorite existingFavorite = new Favorite();
         existingFavorite.setId(99);
@@ -244,5 +252,37 @@ class FavoriteServiceImplTest {
         favoriteService.removeFromFavorites(userId, adId);
 
         verify(favoriteRepository).deleteByUser_IdAndAd_Id(userId, adId);
+    }
+
+    @Test
+    void addToFavorite_shouldThrow_whenUserAddsOwnAd() {
+        FavoriteDTO dto = new FavoriteDTO();
+        dto.setUserId(1);
+        dto.setAdId(2);
+
+        User user = new User();
+        user.setId(1);
+
+        User adOwner = new User();
+        adOwner.setId(1);
+
+        Ad ad = new Ad();
+        ad.setId(2);
+        ad.setUser(adOwner);
+
+        when(userRepository.findById(1)).thenReturn(Optional.of(user));
+        when(adRepository.findById(2)).thenReturn(Optional.of(ad));
+
+        IllegalArgumentException ex = assertThrows(
+                IllegalArgumentException.class,
+                () -> favoriteService.addToFavorite(dto)
+        );
+
+        assertEquals("you can't add your ad to favorites", ex.getMessage());
+
+        verify(userRepository).findById(1);
+        verify(adRepository).findById(2);
+        verifyNoInteractions(favoriteMapper);
+        verify(favoriteRepository, never()).save(any());
     }
 }

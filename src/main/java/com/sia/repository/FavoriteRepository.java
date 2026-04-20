@@ -15,5 +15,7 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
 
     Optional<Favorite> findByUser_IdAndAd_Id(Integer userId, Integer AdId);
 
+    boolean existsByUser_IdAndAd_Id(Integer userId, Integer adId);
+
     void deleteByUser_IdAndAd_Id(Integer userId, Integer AdId);
 }

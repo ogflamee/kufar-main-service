@@ -1,5 +1,18 @@
 spring:
+  application:
+    name: kufar-main-service
+
   datasource:
     url: jdbc:postgresql://localhost:5432/kufar_main_db
     username: postgres
     password: 7bonMy-cyteq
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    format_sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration

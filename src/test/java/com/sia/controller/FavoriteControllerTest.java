@@ -1,6 +1,7 @@
 package com.sia.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sia.config.TestSecurityConfig;
 import com.sia.dto.FavoriteDTO;
 import com.sia.exception.GlobalExceptionHandler;
 import com.sia.service.FavoriteService;
@@ -24,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(FavoriteController.class)
-@Import(GlobalExceptionHandler.class)
+@Import({GlobalExceptionHandler.class, TestSecurityConfig.class})
 class FavoriteControllerTest {
 
     @Autowired

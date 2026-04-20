@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Избранное</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 24px;
+            color: #2d3748;
+        }
+
+        .page-shell {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+            overflow: hidden;
+        }
+
+        .content {
+            padding: 34px;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .top-row h2 {
+            font-size: 1.8rem;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .top-row p {
+            color: #6b7280;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .fav-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .fav-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+        }
+
+        .fav-card-body {
+            padding: 18px;
+        }
+
+        .fav-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+
+        .fav-price {
+            color: #6d28d9;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .fav-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn-light {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .btn-light:hover {
+            background: #e0e7ff;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.28);
+        }
+
+        .empty-box {
+            padding: 40px;
+            text-align: center;
+            color: #64748b;
+            background: #f8fafc;
+            border-radius: 14px;
+            border: 1px dashed #cbd5e1;
+        }
+
+        .pagination {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .page-indicator {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        @media (max-width: 1200px) {
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 10px;
+            }
+
+            .content {
+                padding: 18px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-shell">
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="content">
+        <div class="top-row">
+            <div>
+                <h2>Моё избранное</h2>
+                <p th:text="'Сохранено: ' + ${favoritesPage.totalElements}">Сохранено: 0</p>
+            </div>
+
+            <a th:href="@{/ads}" class="btn btn-light">← К объявлениям</a>
+        </div>
+
+        <div th:if="${favoritesPage.content.isEmpty()}" class="empty-box">
+            У тебя пока нет избранных объявлений
+        </div>
+
+        <div th:if="${!favoritesPage.content.isEmpty()}" class="cards-grid">
+            <div class="fav-card" th:each="favorite : ${favoritesPage.content}">
+                <div class="fav-card-body">
+                    <div class="fav-title" th:text="${favorite.adTitle}">Название</div>
+                    <div class="fav-price" th:text="${favorite.price} + ' BYN'">100 BYN</div>
+
+                    <div class="fav-actions">
+                        <a class="btn btn-light"
+                           th:href="@{/ads/{id}(id=${favorite.adId})}">
+                            Подробнее
+                        </a>
+
+                        <form th:action="@{/favorites/{id}/remove(id=${favorite.adId})}" method="post">
+                            <button type="submit" class="btn btn-danger">Убрать</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination" th:if="${favoritesPage.totalPages > 1}">
+            <a class="btn btn-light"
+               th:if="${favoritesPage.number > 0}"
+               th:href="@{/favorites(page=${favoritesPage.number - 1}, size=${favoritesPage.size})}">
+                ← Предыдущая
+            </a>
+
+            <span class="page-indicator"
+                  th:text="'Страница ' + (${favoritesPage.number} + 1) + ' из ' + ${favoritesPage.totalPages}">
+                Страница 1 из 1
+            </span>
+
+            <a class="btn btn-light"
+               th:if="${favoritesPage.number + 1 < favoritesPage.totalPages}"
+               th:href="@{/favorites(page=${favoritesPage.number + 1}, size=${favoritesPage.size})}">
+                Следующая →
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

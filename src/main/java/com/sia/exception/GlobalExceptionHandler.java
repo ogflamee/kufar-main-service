@@ -18,7 +18,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException e) {
-
         log.error("MethodArgumentNotValidException: {}", e.getMessage(), e);
 
         Map<String, Object> body = new LinkedHashMap<>();
@@ -35,49 +34,44 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Map<String, Object>> handleConstraintViolation(ConstraintViolationException e) {
-
-        log.error("ConstraintViolationException: {}", e.getMessage(), e);
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("error", e.getMessage());
-        return ResponseEntity.badRequest().body(body);
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(), e, "ConstraintViolationException");
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException e) {
-
-        log.error("IllegalArgumentException: {}", e.getMessage(), e);
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("error", e.getMessage());
-        return ResponseEntity.badRequest().body(body);
+    @ExceptionHandler({IllegalArgumentException.class, BadRequestException.class})
+    public ResponseEntity<Map<String, Object>> handleBadRequest(RuntimeException e) {
+        return buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(), e, "BadRequestException");
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Map<String, Object>> handleRuntime(RuntimeException e) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNotFound(NotFoundException e) {
+        return buildErrorResponse(HttpStatus.NOT_FOUND, e.getMessage(), e, "NotFoundException");
+    }
 
-        log.error("RuntimeException: {}", e.getMessage(), e);
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<Map<String, Object>> handleConflict(ConflictException e) {
+        return buildErrorResponse(HttpStatus.CONFLICT, e.getMessage(), e, "ConflictException");
+    }
 
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.NOT_FOUND.value());
-        body.put("error", e.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    @ExceptionHandler(ExternalServiceException.class)
+    public ResponseEntity<Map<String, Object>> handleExternalService(ExternalServiceException e) {
+        return buildErrorResponse(HttpStatus.SERVICE_UNAVAILABLE, e.getMessage(), e, "ExternalServiceException");
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleOther(Exception e) {
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", e, "Unexpected error");
+    }
 
-        log.error("Unexpected error: {}", e.getMessage(), e);
+    private ResponseEntity<Map<String, Object>> buildErrorResponse(HttpStatus status,
+                                                                   String message,
+                                                                   Exception e,
+                                                                   String logTitle) {
+        log.error("{}: {}", logTitle, e.getMessage(), e);
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        body.put("error", "Internal server error");
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+        body.put("status", status.value());
+        body.put("error", message);
+        return ResponseEntity.status(status).body(body);
     }
 }

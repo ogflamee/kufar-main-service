@@ -1,10 +1,13 @@
 package com.sia.impl.service;
 
+import com.sia.client.ChatClient;
 import com.sia.dto.AdDTO;
+import com.sia.dto.MessageDTO;
 import com.sia.entity.Ad;
 import com.sia.entity.AdStatus;
 import com.sia.entity.Category;
 import com.sia.entity.User;
+import com.sia.exception.NotFoundException;
 import com.sia.mapper.AdMapper;
 import com.sia.repository.AdRepository;
 import com.sia.repository.CategoryRepository;
@@ -38,6 +41,9 @@ class AdServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private ChatClient chatClient;
 
     @InjectMocks
     private AdServiceImpl adService;
@@ -268,7 +274,7 @@ class AdServiceImplTest {
         when(adRepository.existsById(id)).thenReturn(false);
 
         RuntimeException ex = assertThrows(
-                RuntimeException.class,
+                NotFoundException.class,
                 () -> adService.deleteAd(id)
         );
 
@@ -335,5 +341,78 @@ class AdServiceImplTest {
         verify(adRepository).findById(id);
         verify(adRepository, never()).save(any());
         verifyNoInteractions(adMapper);
+    }
+
+    @Test
+    void incrementViews_success() {
+        Integer adId = 1;
+
+        Ad ad = new Ad();
+        ad.setId(adId);
+        ad.setViewsCount(5);
+
+        Ad saved = new Ad();
+        saved.setId(adId);
+        saved.setViewsCount(6);
+
+        AdDTO dto = new AdDTO();
+        dto.setId(adId);
+        dto.setViewsCount(6);
+
+        when(adRepository.findById(adId)).thenReturn(Optional.of(ad));
+        when(adRepository.save(ad)).thenReturn(saved);
+        when(adMapper.toDTO(saved)).thenReturn(dto);
+
+        AdDTO result = adService.incrementViews(adId);
+
+        assertNotNull(result);
+        assertEquals(6, result.getViewsCount());
+        assertEquals(6, ad.getViewsCount());
+
+        verify(adRepository).findById(adId);
+        verify(adRepository).save(ad);
+        verify(adMapper).toDTO(saved);
+    }
+
+    @Test
+    void getChatForAdAndUsers_success() {
+        Integer adId = 10;
+        Integer firstUserId = 1;
+        Integer secondUserId = 2;
+
+        MessageDTO message = new MessageDTO();
+        message.setId(100);
+        message.setAdId(adId);
+        message.setSenderId(firstUserId);
+        message.setReceiverId(secondUserId);
+        message.setText("test");
+
+        when(chatClient.getChatByAdAndUsers(adId, firstUserId, secondUserId))
+                .thenReturn(List.of(message));
+
+        List<MessageDTO> result = adService.getChatForAdAndUsers(adId, firstUserId, secondUserId);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(100, result.get(0).getId());
+        assertEquals("test", result.get(0).getText());
+
+        verify(chatClient).getChatByAdAndUsers(adId, firstUserId, secondUserId);
+    }
+
+    @Test
+    void sendMessage_success() {
+        Integer adId = 10;
+        Integer senderId = 1;
+        Integer receiverId = 2;
+        String text = "test";
+
+        adService.sendMessage(adId, senderId, receiverId, text);
+        verify(chatClient).sendMessage(argThat(message ->
+                message.getAdId().equals(adId) &&
+                        message.getSenderId().equals(senderId) &&
+                        message.getReceiverId().equals(receiverId) &&
+                        message.getText().equals(text)
+        ));
     }
 }

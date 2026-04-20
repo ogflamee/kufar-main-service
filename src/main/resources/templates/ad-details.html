@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали объявления</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 24px;
+            color: #2d3748;
+        }
+
+        .page-shell {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+            overflow: hidden;
+        }
+
+        .content {
+            padding: 34px;
+        }
+
+        .detail-card {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .ad-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .ad-price {
+            color: #6d28d9;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .ad-description {
+            color: #475569;
+            line-height: 1.6;
+            margin-top: 18px;
+            margin-bottom: 22px;
+            font-size: 1rem;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .meta-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .meta-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        .meta-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.35);
+        }
+
+        .btn-light {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .btn-light:hover {
+            background: #e0e7ff;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.28);
+        }
+
+        form {
+            margin: 0;
+        }
+
+        .top-link {
+            margin-bottom: 20px;
+        }
+
+        .top-link a {
+            color: #4338ca;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 12px;
+            }
+
+            .content {
+                padding: 18px;
+            }
+
+            .detail-card {
+                padding: 18px;
+            }
+
+            .meta-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ad-title {
+        \font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-shell">
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="content">
+        <div class="top-link">
+            <a th:href="@{/ads}">← Назад к объявлениям</a>
+        </div>
+
+        <div class="detail-card">
+            <div class="top-row">
+                <div>
+                    <div class="ad-title" th:text="${ad.title}">Название</div>
+                    <div class="ad-price" th:text="${ad.price} + ' BYN'">100 BYN</div>
+                </div>
+            </div>
+
+            <div class="ad-description" th:text="${ad.description}">
+                Описание объявления
+            </div>
+
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <div class="meta-label">Город</div>
+                    <div class="meta-value" th:text="${ad.city}">Минск</div>
+                </div>
+
+                <div class="meta-item">
+                    <div class="meta-label">Статус</div>
+                    <div class="meta-value" th:text="${ad.status}">ACTIVE</div>
+                </div>
+
+                <div class="meta-item">
+                    <div class="meta-label">Пользователь</div>
+                    <div class="meta-value" th:text="${ad.username}">username</div>
+                </div>
+
+                <div class="meta-item">
+                    <div class="meta-label">Категория</div>
+                    <div class="meta-value" th:text="${ad.categoryName}">categoryName</div>
+                </div>
+
+                <div class="meta-item">
+                    <div class="meta-label">Просмотры</div>
+                    <div class="meta-value" th:text="${ad.viewsCount}">0</div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <form th:if="${currentUserId != null and !isOwner}"
+                      th:action="@{/favorites/{id}/add(id=${ad.id})}"
+                      method="post">
+                    <button type="submit" class="btn btn-light">В избранное</button>
+                </form>
+
+                <a th:if="${isOwner}"
+                   th:href="@{/ads/{id}/edit(id=${ad.id})}"
+                   class="btn btn-light">
+                    Редактировать
+                </a>
+
+                <form th:if="${isOwner}"
+                      th:action="@{/ads/{id}/delete(id=${ad.id})}"
+                      method="post">
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </div>
+            <div th:if="${currentUserId != null and !isOwner}" style="margin-top: 24px;">
+                <div class="detail-card">
+                    <h3 style="margin-bottom: 12px;">Чат по объявлению</h3>
+
+                    <div style="background: white; padding: 15px; border-radius: 10px; min-height: 200px; margin-bottom: 10px;">
+                        <div th:if="${messages == null or #lists.isEmpty(messages)}">
+                            Сообщений пока нет
+                        </div>
+
+                        <div th:each="msg : ${messages}"
+                             th:style="${msg.senderId == currentUserId}
+                    ? 'margin-left:auto; max-width:70%; background:#667eea; color:white; padding:10px; border-radius:10px; margin-bottom:10px;'
+                    : 'max-width:70%; background:#eee; padding:10px; border-radius:10px; margin-bottom:10px;'">
+                            <span th:text="${msg.text}">text</span>
+                        </div>
+                    </div>
+
+                    <form th:if="${chatReceiverId != null}" th:action="@{/chat/send}" method="post">
+                        <input type="hidden" name="adId" th:value="${ad.id}">
+                        <input type="hidden" name="receiverId" th:value="${chatReceiverId}">
+                        <input type="text" name="text" placeholder="Сообщение..." required>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+
+            <div th:if="${currentUserId != null and isOwner}" style="margin-top: 24px;">
+                <div class="detail-card">
+                    <h3 style="margin-bottom: 12px;">Диалоги по объявлению</h3>
+
+                    <div th:if="${dialogUserIds == null or #lists.isEmpty(dialogUserIds)}">
+                        Пока никто не писал по этому объявлению
+                    </div>
+
+                    <div th:if="${dialogUserIds != null and !#lists.isEmpty(dialogUserIds)}"
+                         style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
+                        <a th:each="userId : ${dialogUserIds}"
+                           th:href="@{/ads/{id}(id=${ad.id}, chatUserId=${userId})}"
+                           class="btn btn-light"
+                           th:text="'Чат с пользователем #' + ${userId}">
+                            Чат
+                        </a>
+                    </div>
+
+                    <div th:if="${selectedChatUserId != null}">
+                        <h4 style="margin-bottom: 12px;" th:text="'Переписка с пользователем #' + ${selectedChatUserId}"></h4>
+
+                        <div style="background: white; padding: 15px; border-radius: 10px; min-height: 200px; margin-bottom: 10px;">
+                            <div th:if="${messages == null or #lists.isEmpty(messages)}">
+                                Сообщений пока нет
+                            </div>
+
+                            <div th:each="msg : ${messages}"
+                                 th:style="${msg.senderId == currentUserId}
+                        ? 'margin-left:auto; max-width:70%; background:#667eea; color:white; padding:10px; border-radius:10px; margin-bottom:10px;'
+                        : 'max-width:70%; background:#eee; padding:10px; border-radius:10px; margin-bottom:10px;'">
+                                <span th:text="${msg.text}">text</span>
+                            </div>
+                        </div>
+
+                        <form th:action="@{/chat/send}" method="post">
+                            <input type="hidden" name="adId" th:value="${ad.id}">
+                            <input type="hidden" name="receiverId" th:value="${selectedChatUserId}">
+                            <input type="text" name="text" placeholder="Сообщение..." required>
+                            <button type="submit" class="btn btn-primary">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

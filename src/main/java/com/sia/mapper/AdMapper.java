@@ -9,7 +9,9 @@ import com.sia.entity.Ad;
 public interface AdMapper {
 
     @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.username", target = "username")
     @Mapping(source = "category.id", target = "categoryId")
+    @Mapping(source = "category.name", target = "categoryName")
     AdDTO toDTO(Ad Ad);
 
     @Mapping( target = "user", ignore = true)

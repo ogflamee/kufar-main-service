@@ -1,5 +1,7 @@
 package com.sia.service.impl;
 
+import com.sia.exception.ConflictException;
+import com.sia.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository categoryRepository;;
+    private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
 
     @Override
@@ -28,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryRepository.findByName(dto.getName())
                 .ifPresent(c ->{
-                    throw new IllegalArgumentException("category already exists");
+                    throw new ConflictException("category already exists");
                 } );
 
         Category category = categoryMapper.toEntity(dto);
@@ -57,12 +59,12 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(()-> {
                     log.warn("category not found with id: {}", id);
-                    return new RuntimeException("category was not found");
+                    return new NotFoundException("category was not found");
                 });
 
         categoryRepository.findByName(dto.getName())
                 .ifPresent(c ->{
-                    throw new IllegalArgumentException("category already exists");
+                    throw new ConflictException("category already exists");
                 } );
 
         category.setName(dto.getName());
