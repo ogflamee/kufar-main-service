@@ -5,7 +5,11 @@
 <body>
 <header th:fragment="header" class="navbar">
     <div class="container navbar-inner">
-        <a class="brand" th:href="@{/ads}">KufarClone</a>
+        <a class="brand" th:href="@{/ads}">
+            <span class ="brands-logo">◆</span>
+            <span class ="brand-text">KufarClone</span>
+            <span class ="brands-logo">◆</span>
+        </a>
 
         <nav class="nav-links">
             <div sec:authorize="isAnonymous()" style="display:flex; gap:12px;">
