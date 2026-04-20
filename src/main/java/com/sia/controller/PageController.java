@@ -6,6 +6,7 @@ import com.sia.dto.MessageDTO;
 import com.sia.dto.UserCreateDTO;
 import com.sia.dto.UserDTO;
 import com.sia.entity.AdStatus;
+import com.sia.exception.ConflictException;
 import com.sia.service.AdService;
 import com.sia.service.CategoryService;
 import com.sia.service.FavoriteService;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -56,7 +58,7 @@ public class PageController {
 
         try {
             userService.createUser(userDto);
-        } catch (Exception e) {
+        } catch (ConflictException e) {
             bindingResult.reject("registerError", e.getMessage());
             return "register";
         }
@@ -216,13 +218,25 @@ public class PageController {
 
     @PostMapping("/favorites/{adId}/add")
     public String addFavorite(@PathVariable Integer adId,
-                              Authentication authentication) {
+                              Authentication authentication,
+                              RedirectAttributes redirectAttributes) {
         FavoriteDTO favoriteDTO = FavoriteDTO.builder()
                 .userId(getCurrentUserId(authentication))
                 .adId(adId)
                 .build();
 
-        favoriteService.addToFavorite(favoriteDTO);
+        try {
+            favoriteService.addToFavorite(favoriteDTO);
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "Объявление добавлено в избранное");
+        } catch (ConflictException e) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Это объявление уже есть в избранном");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Нельзя добавить своё объявление в избранное");
+        }
+
         return "redirect:/ads/" + adId;
     }
 
