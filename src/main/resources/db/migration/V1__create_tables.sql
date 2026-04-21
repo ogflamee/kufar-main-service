@@ -1,3 +1,5 @@
+CREATE DATABASE kufar_main_db;
+
 CREATE TABLE users (
    id SERIAL PRIMARY KEY,
    email VARCHAR(255) UNIQUE NOT NULL,
